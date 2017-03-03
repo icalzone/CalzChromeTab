@@ -59,6 +59,8 @@ var wunderground = {
     buildWeather: function () {
         wunderground.getConditions();
         wunderground.getForecast();
+        wunderground.getAstronomy();
+        // wunderground.getAlmanac();
         
         $( document ).ajaxStop(function() {
             // wunderground.weather.conditions = wunderground.conditions;
@@ -87,59 +89,56 @@ var wunderground = {
             conditions.uv = "UV: " + conditions.current_observation.UV;
             conditions.heatindex = (conditions.current_observation.heat_index_f == "NA") ? "Heat index: --" : "Heat index: " + conditions.current_observation.heat_index_f + " °F";
             conditions.solarradiation = (conditions.current_observation.solarradiation == "--") ? "Solar: --" : "Solar: " + conditions.current_observation.solarradiation + " w/m2";
-            var wind = "Wind from the " + conditions.current_observation.wind_dir + " at " + conditions.current_observation.wind_mph + " MPH "
+            var wind = "Wind from the " + conditions.current_observation.wind_dir + " at " + conditions.current_observation.wind_mph + " MPH ";
             wind += "Gusting to " + conditions.current_observation.wind_gust_mph + " MPH"
             conditions.wind = wind;
             wunderground.conditions = conditions;
         }).fail(function () {
-            console.log("Error getting conditions")
+            console.error("Error getting conditions");
         });
     },
     getForecast: function () {
         this.getData(this.getUrl("forecast")).done(function (data) {
-            var forecast = data.forecast.simpleforecast.forecastday;
-            $.each(forecast, function( key,value ) {
-                forecast[key].icon_code_white = '<i class="wu wu-white wu-75 wu-' + value.icon + '"></i>';
-                forecast[key].icon_code_black = '<i class="wu wu-black wu-75 wu-' + value.icon + '"></i>';
-                forecast[key].temp = value.low.fahrenheit + "/" + value.high.fahrenheit + " °F";
-                forecast[key].date = value.date.monthname + " " + value.date.day + wunderground.nth(value.date.day);
-            });
-            wunderground.forecast = forecast;
+            wunderground.forecast = data.forecast.simpleforecast.forecastday;
         }).fail(function () {
-            console.log("Error getting forecast")
+            console.error("Error getting forecast");
+        });
+    },
+    getAlmanac: function () {
+        this.getData(this.getUrl("almanac")).done(function (data) {
+            wunderground.almanac = data;
+        }).fail(function () {
+            console.error("Error getting forecast");
+        });
+    },
+    getAstronomy: function () {
+        this.getData(this.getUrl("astronomy")).done(function (data) {
+            wunderground.astronomy = data.moon_phase;
+            console.log(wunderground.astronomy)
+        }).fail(function () {
+            console.error("Error getting forecast");
         });
     },
     loadWeather: function(){
-        // console.log(wunderground.weather)
+        console.log(wunderground.forecast);
 
         $("#weatherBar").loadTemplate("../templates/wunderground.html",
-            wunderground.conditions, {
-                error: function (e) {
-                    console.log(e);
-                },
+            wunderground.conditions, {error: function (e) {console.error(e);},
                 complete: function (e) {
+                    $("#forecast-display").loadTemplate("../templates/forecast.html",
+                    wunderground.forecast,{error:function(e){console.error(e);}});
+
                     $("#weatherBar i").on("click", function (e) {
                         $('#weatherDetailModal').modal('show');
                     });
                 }
             });
-    },
-    storeWeather: function(){
-            // localStorage.weather = JSON.stringify(conditions);
 
+            wunderground.storeWeather("conditions",wunderground.conditions);
+            wunderground.storeWeather("forecast",wunderground.forecast);
     },
-    nth: function(d){
-        if (d > 3 && d < 21) return 'th';
-        switch (d % 10) {
-            case 1:
-                return "st";
-            case 2:
-                return "nd";
-            case 3:
-                return "rd";
-            default:
-                return "th";
-        }
+    storeWeather: function(type,weather){
+        localStorage[type] = JSON.stringify(weather);
     }
 };
 

@@ -26,6 +26,12 @@ body {
 }
 
 .margin0{margin: 0;}
+.padding0{padding: 0;}
+.paddingLeft0{padding-left: 0;}
+.paddingRight0{padding-right: 0;}
+.marginBottom5{margin-bottom:5px;}
+.marginLeftRight20{margin: 0 20px;}
+.paddingLeftRight8{padding: 0 8px;}
 .center{text-align: center;}
 .left{text-align: left;}
 .right{text-align: right;}
@@ -183,6 +189,13 @@ body {
 .weatherLarge{
     font-size: 22px;
 }
+.weatherSmall{
+    font-size: 10px;
+}
+.weatherIcon{
+    width: 75px;    
+    height: 75px;
+}
 .weatherIcon:hover {
     cursor: pointer
 }
@@ -194,6 +207,11 @@ body {
 }
 .weatherDetailHeader{
     margin: 0 0 20px;
+}
+#forecast-display{
+    border-top: 1px solid #ddd;
+    margin: 20px 0 0;
+    padding: 10px 0 0;
 }
 
 /* BOTTOM RIGHT LINKS */

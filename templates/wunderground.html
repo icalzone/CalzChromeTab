@@ -1,14 +1,14 @@
 <div class="row vertical-align">
-    <div class="col-xs-5">
+    <div class="col-xs-5 paddingRight0">
         <div class="pull-right">
             <p class="right margin0 weatherLarge" data-content="current_observation.display_location.full"></p>
             <p class="right margin0 weatherDesc" data-content="current_observation.weather"></p>
         </div>
     </div>
     <div class="col-xs-2">
-        <div class="weatherIcon" data-content="icon_code_white" id="weatherIcon"></div>
+        <div class="weatherIcon padding0" data-content="icon_code_white" id="weatherIcon"></div>
     </div>
-    <div class="col-xs-5">
+    <div class="col-xs-5 paddingLeft0">
         <div class="pull-left">
             <p class="left margin0 weatherLarge" data-content="curtemp"></p>
             <p class="left margin0" data-content="feelslike"></p>
@@ -24,7 +24,6 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
                 <h4 class="modal-title" id="weatherDetailModalLabel" data-content="current_observation.observation_location.full"></h4>
-                <p class="margin0" data-content="current_observation.station_id"></p>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -33,16 +32,16 @@
                     </div>
                 </div>
                 <div class="row vertical-align">
-                    <div class="col-xs-5">
+                    <div class="col-xs-5 paddingRight0">
                         <div class="pull-right">
                             <p class="right margin0 weatherLarge" data-content="current_observation.display_location.full"></p>
                             <p class="right margin0 weatherDesc" data-content="current_observation.weather"></p>
                         </div>
                     </div>
                     <div class="col-xs-2">
-                        <div class="weatherIcon" data-content="icon_code_black"></div>
+                        <div class="weatherIcon padding0" data-content="icon_code_black"></div>
                     </div>
-                    <div class="col-xs-5">
+                    <div class="col-xs-5 paddingLeft0">
                         <div class="pull-left">
                             <p class="left margin0 weatherLarge" data-content="curtemp"></p>
                             <p class="left margin0" data-content="feelslike"></p>
@@ -50,33 +49,33 @@
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 10px;">
-<div class="col-xs-12">
-    <p class="weatherWind" data-content="wind"></p>
-</div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <p class="left margin0" data-content="dewpoint"></p>
-        <p class="left margin0" data-content="humidity"></p>
-        <p class="left margin0" data-content="preciprate"></p>
-        <p class="left margin0" data-content="precipaccum"></p>
-        <p class="left margin0" data-content="pressure"></p>
+                    <div class="col-xs-12">
+                        <p class="weatherWind" data-content="wind"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5 col-sm-offset-2">
+                        <p class="left margin0 weatherSmall" data-content="dewpoint"></p>
+                        <p class="left margin0 weatherSmall" data-content="humidity"></p>
+                        <p class="left margin0 weatherSmall" data-content="preciprate"></p>
+                        <p class="left margin0 weatherSmall" data-content="precipaccum"></p>
+                        <p class="left margin0 weatherSmall" data-content="pressure"></p>
+                    </div>
+                    <div class="col-sm-5">
+                        <p class="left margin0 weatherSmall" data-content="windchill"></p>
+                        <p class="left margin0 weatherSmall" data-content="visibility"></p>
+                        <p class="left margin0 weatherSmall" data-content="uv"></p>
+                        <p class="left margin0 weatherSmall" data-content="solarradiation"></p>
+                        <p class="left margin0 weatherSmall" data-content="heatindex"></p>
+                    </div>
+                </div>
+                <div class="row" id="forecast-display"></div>
+            </div>
+            <div class="modal-footer">
+                <p class="margin0" data-content="current_observation.station_id"></p>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-6">
-        <p class="left margin0" data-content="windchill"></p>
-        <p class="left margin0" data-content="visibility"></p>
-        <p class="left margin0" data-content="uv"></p>
-        <p class="left margin0" data-content="solarradiation"></p>
-        <p class="left margin0" data-content="heatindex"></p>
-    </div>
-</div>
-<div class="row">
-</div>
-</div>
-<div class="modal-footer">
-</div>
-</div>
-</div>
 </div>
 <!-- end Modal-->
 
@@ -86,7 +85,6 @@
 alerts
 almanac
 astonomy
-forecast
 forecast 10 day
 history
 hourly
