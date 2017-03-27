@@ -1,46 +1,50 @@
-function fetchPixabayPhoto(width, reload){
-    var settings = JSON.parse(localStorage['settings']),
-        ajax = new XMLHttpRequest(),
+function fetchBackground(settings, photoService, width) {
+    pixabayPhoto(settings, width);
+}
+
+function setBackground(url) {
+    document.getElementById('bg_div').style.backgroundImage = 'url(' + url + ')';
+
+    // TODO: store new background
+    // fetchPixabayPhoto(window.innerWidth);
+
+    // console.log(localStorage.getItem('currentPhoto'));
+    // console.log(newPhoto);
+
+    // var currentPhoto = localStorage.getItem('currentPhoto');
+    // if(currentPhoto === null){
+    //     // toDataUrl('../images/initial_bg.jpg', function (base64Img) {
+    //     //     currentPhoto = base64Img;
+    //     //     localStorage.setItem('currentPhoto',currentPhoto);
+    //     // });    
+    // }
+    // 
+
+}
+
+function pixabayPhoto(settings, width) {
+
+    var ajax = new XMLHttpRequest(),
         url = 'https://pixabay.com/api?key=2363059-65b4954bde19ecbe197d0f47e&response_group=high_resolution&image_type=photo&orientation=horizontal&per_page=100&';
-        url += settings.searchTerm ? 'q='+encodeURIComponent(settings.searchTerm) : 'editors_choice=true';
+    url += settings.searchTerm ? 'q=' + encodeURIComponent(settings.searchTerm) : 'editors_choice=true';
     if (settings.safeSearch) url += '&safesearch=true';
-    
+
     // fetch photo
-    ajax.open('GET', url+'&t='+new Date().getTime());
-    ajax.onreadystatechange = function(){
-        if (ajax.readyState > 3 && ajax.status == 200) {
+    ajax.open('GET', url + '&t=' + new Date().getTime());
+    ajax.onreadystatechange = function () {
+        if (ajax.readyState > 3 && ajax.status === 200) {
             var data = JSON.parse(ajax.responseText);
             if (data.totalHits) {
-                var photo = data.hits[0], bg_img_url = width > 1600 ? photo.fullHDURL : photo.largeImageURL;
-                localStorage.currentPhoto = bg_img_url;
-                if (reload) location.reload();
+                var photo = data.hits[0],
+                    bg_img_url = width > 1600 ? photo.fullHDURL : photo.largeImageURL;
 
-                // preload image as base64 data string
-                // URL is used as src if base 64 method didn't have time to finish loading
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', bg_img_url, true);
-                xhr.responseType = 'blob';
-                xhr.onload = function(r){
-                    if (this.status == 200) {
-                        // get binary data
-                        var blob = this.response;
-                        var reader = new FileReader();
-                        reader.readAsDataURL(blob);
-                        reader.onloadend = function() {
-                            localStorage.currentPhotoBase64 = reader.result;
-                        }
-                    }
-                };
-                xhr.send();
+                setBackground(bg_img_url);
+                updateSyncSettings('currentPhoto', bg_img_url);
             }
         }
     };
     ajax.send();
 }
-
-fetchPixabayPhoto(window.innerWidth);
-
-
 
 // Reddit
 // myApp.factory("RedditService", ["$http", "$q", function (e, t) {

@@ -1,20 +1,57 @@
-function fetchWeather(service) {
-    if (service === 'wunderground') {
-        wunderground.buildWeather();
-    } else if (service === 'openweathermap') {
-        fetchOpenWeatherMapWeather();
+$.addTemplateFormatter({
+    ForecastTemp: function (value, template) {
+        return value.low.fahrenheit + "/" + value.high.fahrenheit + " °F";
+    },
+    ForecastDate: function (value, template) {
+        return value.weekday + ",</br>" + value.monthname + " " + value.day + nth(value.day);
+    },
+    IconCode: function (value, template) {
+        return '<i class="wi wi-wu-' + value + '"></i>';
+    },
+    OWMIconCode: function (value, template) {
+        return '<i class="wi wi-owm-' + value + '"></i>';
+    },
+    WindIconCode: function (value, template) {
+        return '<i class="wi wi-wind from-' + value + '-deg"></i>';
+    },
+    WindString: function (value, template) {
+        return 'Wind from the ' + value.wind_dir + ' at ' + value.wind_mph + ' MPH, Gusting to ' + value.wind_gust_mph + ' MPH';
     }
+});
+
+
+function fetchWeather(settings) {
+    chrome.storage.sync.get("settings", function (obj) {
+        var getFreshWeather = true;
+        var d = new Date();
+        var storedTime = new Date(obj.settings['weatherLastCall']);
+        var diff = Math.abs(d - storedTime);
+        var minutes = Math.floor((diff / 1000) / 60);
+
+        console.log("Number of minutes since last call: " + minutes);
+
+        if (minutes <= 5) {
+            getFreshWeather = false;
+        }
+
+        if (settings.weatherservice === 'wunderground') {
+            wunderground.buildWeather(getFreshWeather);
+        } else if (settings.weatherservice === 'openweathermap') {
+            fetchOpenWeatherMapWeather(getFreshWeather);
+        }
+    });
 }
 
 var wunderground = {
     conditions: null,
-    forecast:null,
-    weather:[],
+    forecast: null,
+    weather: [],
     getSettings: function () {
-        return JSON.parse(localStorage['settings']);
+
+        //return JSON.parse(localStorage['settings']);
     },
     getUrl: function (type) {
-        var settings = this.getSettings();
+        // var settings = this.getSettings();
         var apikey = "c06438628efb9a59";
         var pws = "KNHLEBAN16";
         var city = "Lebanon";
@@ -52,6 +89,21 @@ var wunderground = {
         return url;
     },
     getData: function (url) {
+        // check if it has been 5 miniutes / 300 seconds since last callback
+        var curTime = new Date().getTime() / 1000;
+        var storedTime = localStorage.getItem('weatherlastcall');
+        var lastCall = storedTime === null ? curTime : parseInt(JSON.parse(storedTime));
+
+        console.log("Current time: " + curTime);
+        console.log("Stored time: " + storedTime);
+        console.log("Last call: " + lastCall);
+
+        var timeDiff = (curTime - lastCall) / 1000;
+
+        console.log("Time difference: " + timeDiff);
+
+        // localStorage.setItem('weatherlastcall', lastCall);
+
         return $.getJSON(url).then(function (data) {
             return data;
         });
@@ -59,15 +111,15 @@ var wunderground = {
     buildWeather: function () {
         wunderground.getConditions();
         wunderground.getForecast();
-        wunderground.getAstronomy();
+        //wunderground.getAstronomy();
         // wunderground.getAlmanac();
-        
-        $( document ).ajaxStop(function() {
+
+        $(document).ajaxStop(function () {
             // wunderground.weather.conditions = wunderground.conditions;
             // wunderground.weather.forecast = wunderground.forecast;
 
             // if(jQuery.active === 0){
-                wunderground.loadWeather();
+            wunderground.loadWeather();
             // }
         });
     },
@@ -75,8 +127,6 @@ var wunderground = {
         this.getData(this.getUrl("conditions")).done(function (data) {
             var conditions = data;
             conditions.service = "wunderground";
-            conditions.icon_code_white = '<i class="wu wu-white wu-75 wu-' + conditions.current_observation.icon + '"></i>';
-            conditions.icon_code_black = '<i class="wu wu-black wu-75 wu-' + conditions.current_observation.icon + '"></i>';
             conditions.curtemp = conditions.current_observation.temp_f + " °F";
             conditions.feelslike = "Feels like " + conditions.current_observation.feelslike_f + " °F";
             conditions.dewpoint = "Dew Point: " + conditions.current_observation.dewpoint_f + " °F";
@@ -89,9 +139,6 @@ var wunderground = {
             conditions.uv = "UV: " + conditions.current_observation.UV;
             conditions.heatindex = (conditions.current_observation.heat_index_f == "NA") ? "Heat index: --" : "Heat index: " + conditions.current_observation.heat_index_f + " °F";
             conditions.solarradiation = (conditions.current_observation.solarradiation == "--") ? "Solar: --" : "Solar: " + conditions.current_observation.solarradiation + " w/m2";
-            var wind = "Wind from the " + conditions.current_observation.wind_dir + " at " + conditions.current_observation.wind_mph + " MPH ";
-            wind += "Gusting to " + conditions.current_observation.wind_gust_mph + " MPH"
-            conditions.wind = wind;
             wunderground.conditions = conditions;
         }).fail(function () {
             console.error("Error getting conditions");
@@ -114,19 +161,27 @@ var wunderground = {
     getAstronomy: function () {
         this.getData(this.getUrl("astronomy")).done(function (data) {
             wunderground.astronomy = data.moon_phase;
-            console.log(wunderground.astronomy)
         }).fail(function () {
             console.error("Error getting forecast");
         });
     },
-    loadWeather: function(){
-        console.log(wunderground.forecast);
+    loadWeather: function () {
+        // console.log(wunderground.conditions);
+        // console.log(wunderground.forecast);
+        // console.log(wunderground.astronomy);
 
         $("#weatherBar").loadTemplate("../templates/wunderground.html",
-            wunderground.conditions, {error: function (e) {console.error(e);},
+            wunderground.conditions, {
+                error: function (e) {
+                    console.error(e);
+                },
                 complete: function (e) {
                     $("#forecast-display").loadTemplate("../templates/forecast.html",
-                    wunderground.forecast,{error:function(e){console.error(e);}});
+                        wunderground.forecast, {
+                            error: function (e) {
+                                console.error(e);
+                            }
+                        });
 
                     $("#weatherBar i").on("click", function (e) {
                         $('#weatherDetailModal').modal('show');
@@ -134,11 +189,11 @@ var wunderground = {
                 }
             });
 
-            wunderground.storeWeather("conditions",wunderground.conditions);
-            wunderground.storeWeather("forecast",wunderground.forecast);
+        wunderground.storeWeather("conditions", wunderground.conditions);
+        wunderground.storeWeather("forecast", wunderground.forecast);
     },
-    storeWeather: function(type,weather){
-        localStorage[type] = JSON.stringify(weather);
+    storeWeather: function (type, weather) {
+        updateLocalSettings(type, weather);
     }
 };
 
@@ -150,28 +205,28 @@ var wunderground = {
 
 
 
-function fetchOpenWeatherMapWeather() {
+function fetchOpenWeatherMapWeather(getFreshWeather) {
     var query = "03766";
     var apikey = "fc7d9e6c78ebd960c34d345938ea3da1";
 
-    var settings = JSON.parse(localStorage['settings']),
-        ajax = new XMLHttpRequest(),
+    //var settings = JSON.parse(localStorage['settings']),
+    var ajax = new XMLHttpRequest(),
         url = 'http://api.openweathermap.org/data/2.5/weather?q=' + query + '&units=imperial&APPID=' + apikey;
 
     ajax.open('GET', url);
     ajax.onreadystatechange = function () {
         if (ajax.readyState > 3 && ajax.status == 200) {
             var data = JSON.parse(ajax.responseText);
-
+            console.log(data);
             var weather = new Object();
             weather.service = "openweathermap";
             weather.city = data.name + ", " + data.sys.country;
             weather.curcondition = data.weather[0].description;
             weather.curtemp = Math.round(data.main.temp) + "°F";
             weather.curLowHigh = Math.round(data.main.temp_min) + "°F / " + Math.round(data.main.temp_max) + "°F";
-            weather.icon = "images/weathericons/" + data.weather[0].icon + ".svg";
+            weather.icon = data.weather[0].id;
 
-            localStorage.weather = JSON.stringify(weather);
+            //localStorage.weather = JSON.stringify(weather);
 
             $("#weatherBar").loadTemplate("../templates/openweathermap.html", weather, {
                 error: function (e) {
@@ -186,7 +241,7 @@ function fetchOpenWeatherMapWeather() {
 
 
 
-function fetchForcastIoWeather(){
+function fetchForcastIoWeather() {
 
 }
 

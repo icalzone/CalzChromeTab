@@ -1,3 +1,70 @@
+function updateSyncSettings(key, value){
+    chrome.storage.sync.get("settings", function (obj) {
+        var syncSettings = obj.settings;
+        syncSettings[key] = value;
+        chrome.storage.sync.set({ 'settings': syncSettings }, function () { });
+    });
+}
+function updateLocalSettings(key, value){
+    chrome.storage.local.get("settings", function (obj) {
+        console.dir("Retreived settings: " + obj);
+
+        var localSettings;
+        if(obj.settings === undefined){
+            localSettings = {};
+        } else {
+            localSettings = obj.settings;
+        }
+
+        localSettings[key] = value;
+        chrome.storage.local.set({ 'settings': localSettings }, function () { });
+
+        // console.log("Local settings: "+localSettings);
+    });
+}
+
+
+
+// chrome.storage.sync.get("settings", function (obj) {
+//     if (obj.settings === undefined) {
+//         var defaultSettings = {
+//             "weatherservice": "wunderground",
+//             "searchTerm": "landscape",
+//             "safeSearch": "true",
+//             "currentPhoto": "../images/initial_bg.jpg"
+//         };
+//         chrome.storage.sync.set({
+//             'settings': defaultSettings
+//         }, function () {
+//             initialize(defaultSettings);
+//         });
+//     } else {
+//         initialize(obj.settings);
+//     }
+// });
+
+
+
+function toDataUrl(src, callback, outputFormat) {
+    var img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = function () {
+        var canvas = document.createElement('CANVAS');
+        var ctx = canvas.getContext('2d');
+        var dataURL;
+        canvas.height = this.height;
+        canvas.width = this.width;
+        ctx.drawImage(this, 0, 0);
+        dataURL = canvas.toDataURL(outputFormat);
+        callback(dataURL);
+    };
+    img.src = src;
+    if (img.complete || img.complete === undefined) {
+        img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        img.src = src;
+    }
+}
+
 var capitalize = function (str) {
     str = str || '';
     str = str.toLowerCase();
@@ -85,18 +152,6 @@ function nth(d) {
 }
 
 $.addTemplateFormatter({
-    ForecastTemp: function (value, template) {
-        return value.low.fahrenheit + "/" + value.high.fahrenheit + " °F";
-    },
-    ForecastDate: function (value, template) {
-        return value.weekday + ",</br>" + value.monthname + " " + value.day + nth(value.day);
-    },
-    IconCodeBlack: function (value, template) {
-        return '<i class="wu wu-black wu-75 wu-' + value + '"></i>';
-    },
-    IconCodeWhite: function (value, template) {
-        return '<i class="wu wu-white wu-75 wu-' + value + '"></i>';
-    },
     UpperCaseFormatter: function (value, template) {
         return value.toUpperCase();
     },

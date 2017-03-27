@@ -16,25 +16,39 @@ body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.4;
     color: #fff;
-    background: #444;
-    margin-bottom: 200px;
+    background: #fff;
 }
 
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
 }
-
+.bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.bottomright{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    float:right;
+}
 .margin0{margin: 0;}
+.marginBottom5{margin-bottom:5px;}
+.marginBottom10{margin-bottom:10px;}
+.marginLeftRight20{margin: 0 20px;}
+.marginBottom85{margin-bottom: 85px; }
+
 .padding0{padding: 0;}
 .paddingLeft0{padding-left: 0;}
 .paddingRight0{padding-right: 0;}
-.marginBottom5{margin-bottom:5px;}
-.marginLeftRight20{margin: 0 20px;}
 .paddingLeftRight8{padding: 0 8px;}
-.center{text-align: center;}
-.left{text-align: left;}
-.right{text-align: right;}
+.paddingLeftRight5{padding: 0 5px;}
+
+.textcenter{text-align: center;}
+.textleft{text-align: left;}
+.textright{text-align: right;}
 
 #bg_div,
 #blur_overlay,
@@ -136,14 +150,6 @@ body {
 }
 #topIconRow{margin: 0;}
 
-
-.bottom {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 200px;
-}
-
 /* DATE & TIME */
 .mainClock {
     color: white;
@@ -193,8 +199,7 @@ body {
     font-size: 10px;
 }
 .weatherIcon{
-    width: 75px;    
-    height: 75px;
+    padding-top: 10px;
 }
 .weatherIcon:hover {
     cursor: pointer
@@ -208,10 +213,58 @@ body {
 .weatherDetailHeader{
     margin: 0 0 20px;
 }
+
+i.wi {
+    font-size: 48px;
+    display: inherit;
+    text-align: center;
+}
+
+
+
+.weatherDetailModal .wind-direction span{
+    vertical-align: middle;
+}
+.weatherDetailModal .wind-direction span.wind-string{
+    padding-left: 2px;
+}
+.weatherDetailModal i.wi.wi-wind {
+    font-size: 30px;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.weatherDetailModal i.wi {
+    font-size: 48px;
+    color: darkorange;
+    padding: 15px 0;
+}
+
+.weatherDetailModal .wind-direction{
+    height: 32px
+}
+
 #forecast-display{
     border-top: 1px solid #ddd;
-    margin: 20px 0 0;
+    margin: 10px 0 0;
     padding: 10px 0 0;
+}
+.weatherDetailModal .btn-weatherDetail{
+    background-color: white;
+    color: #333;
+    border-color: white;
+    padding: 0;
+    margin-left: 15px;
+}
+.fa-chevron-right, .fa-chevron-down {
+        padding-top: 4px;
+    font-size: 12px;
+}
+button[aria-expanded=true] .fa-chevron-right {
+   display: none;
+}
+button[aria-expanded=false] .fa-chevron-down {
+   display: none;
 }
 
 /* BOTTOM RIGHT LINKS */
@@ -245,3 +298,70 @@ body {
     color: #ffffff;
     float: right;
 }
+
+
+
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+
+
+
+
+    /*==========  Mobile First Method  ==========*/
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (min-width : 320px) {
+        
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (min-width : 480px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width : 768px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (min-width : 992px) {
+
+    }
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width : 1200px) {
+
+    }
+
+
+
+    /*==========  Non-Mobile First Method  ==========*/
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (max-width : 1200px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (max-width : 992px) {
+        /*i.wi {
+            font-size: 28px;
+        }*/
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (max-width : 768px) {
+
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (max-width : 480px) {
+
+    }
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (max-width : 320px) {
+        
+    }

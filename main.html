@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,89 +10,100 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/wu-icons-style.css">
+    <link rel="stylesheet" type="text/css" href="css/weather-icons.css">
+    <link rel="stylesheet" type="text/css" href="css/weather-icons-wind.css">
+
     <link rel="stylesheet" href="css/styles.css">
 
-  </head>
-  <body>
-  <div class="container-fluid" id="bg_div" class="fade_in">
-      <div class="row">
-          <div class="col-sm-6">
-              <div class="searchCntnr" id="searchCntnr">
+</head>
+
+<body>
+    <div class="container-fluid" id="bg_div" class="fade_in">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="searchCntnr" id="searchCntnr">
                     <div id="srchImgBx">
-                    <i class="fa fa-google fa-2x" aria-hidden="true" id="google" class="srchBxImg"></i>
-                    <i class="fa fa-stack-overflow fa-2x" aria-hidden="true" id="stackoverflow" class="srchBxImg"></i>
-                    <i class="fa fa-github fa-2x" aria-hidden="true" id="github" class="srchBxImg"></i>
-                    <i class="fa fa-youtube fa-2x" aria-hidden="true" id="youtube" class="srchBxImg"></i>
-                    <i class="" aria-hidden="true" id="hypertherm" class="srchBxImg"><image src="images/H.png" /></i>
+                        <i class="fa fa-google fa-2x" aria-hidden="true" id="google" class="srchBxImg"></i>
+                        <i class="fa fa-stack-overflow fa-2x" aria-hidden="true" id="stackoverflow" class="srchBxImg"></i>
+                        <i class="fa fa-github fa-2x" aria-hidden="true" id="github" class="srchBxImg"></i>
+                        <i class="fa fa-youtube fa-2x" aria-hidden="true" id="youtube" class="srchBxImg"></i>
+                        <i class="" aria-hidden="true" id="hypertherm" class="srchBxImg"><image src="images/H.png" /></i>
                     </div>
                     <div id="srchBx"></div>
                 </div>
-          </div>
-          <div class="col-sm-6 nopadding">
-            <div id="topActionBar">
-                <ul class="list-inline" id="topIconRow">
-                <li><a href="openBookmarks">Bookmarks</a></li>
-                <li><span>|</span></li>
-                <li><a href="openHistory">History</a></li>
-                <li><span>|</span></li>
-                <li><a href="openDownloads">Downloads</a></li>
-                <li><span>|</span></li>
-                <li><a href="openSettings">Settings</a></li>
-                </ul>
             </div>
+            <div class="col-sm-6 nopadding">
+                <div id="topActionBar">
+                    <ul class="list-inline" id="topIconRow">
+                        <li><a href="openBookmarks">Bookmarks</a></li>
+                        <li><span>|</span></li>
+                        <li><a href="openHistory">History</a></li>
+                        <li><span>|</span></li>
+                        <li><a href="openDownloads">Downloads</a></li>
+                        <li><span>|</span></li>
+                        <li><a href="openSettings">Settings</a></li>
+                    </ul>
+                </div>
 
-          </div>
-      </div>
-      <div class="row bottom">
-          <div class="col-sm-4 col-sm-offset-4">
-              <div class="datetimeCntnr marginBottom5">
-                <div class="mainClock" id="clockBox"></div>
-                <div class="mainDate" id="dateBox"></div>
-              </div>
-
-              <div class="weatherBar" id="weatherBar"></div>
-          </div>
-          <div class="col-sm-4">
-            <div class="bottomLinksCntnr" id="bottomLinksCntnr">
-                <a href="#" id="settings_link" title="Settings" class="hover_opacity settings"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i></a>
             </div>
-          </div>
-      </div>
-  </div>
-
-    <div id="blur_overlay"></div>
-    <div id="dim_overlay"></div>
-
-    <div id="settings_dialog">
-        Please enter a search term or leave this field blank to choose from all images on Pixabay.
-        <div style="margin:20px 0">
-            <input id="search_term" name="search_term" type="text" maxlength="80" placeholder="Search term ..." style="padding:5px 10px;border-radius:2px;font-size:14px;width:100%;border:1px solid #bbb">
-            <i style="display:block;font-size:12px;color:#777;margin:1px 2px"><a style="float:right;color:#0a88d3;text-decoration:none" href="https://pixabay.com/blog/posts/id-46/" target="_blank">Learn more</a>Example: "cats OR dogs"</i>
         </div>
-        <div style="margin:20px 0">
-            <label style="font-size:12px"><input id="safe_search" type="checkbox"> Enable SafeSearch to block inappropriate or explicit images</label>
+
+        <div class="row bottom marginBottom85">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="datetimeCntnr marginBottom5">
+                    <div class="mainClock" id="clockBox"></div>
+                    <div class="mainDate" id="dateBox"></div>
+                </div>
+            </div>
         </div>
-        <div style="margin:20px 0">
-            <label>Weather service</label>
-            <select id="weather_service" name="weather_service">
+
+        <div class="row bottom marginBottom10">
+            <div class="col-xs-10 col-xs-offset-1">
+                <div class="weatherBar" id="weatherBar"></div>
+            </div>
+        </div>
+
+        <div class="bottomright marginBottom10">
+                <div class="bottomLinksCntnr" id="bottomLinksCntnr">
+                    <a href="#" id="settings_link" title="Settings" class="hover_opacity settings"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i></a>
+                </div>
+        </div>
+
+        <div id="blur_overlay"></div>
+        <div id="dim_overlay"></div>
+
+        <div id="settings_dialog">
+            Please enter a search term or leave this field blank to choose from all images on Pixabay.
+            <div style="margin:20px 0">
+                <input id="search_term" name="search_term" type="text" maxlength="80" placeholder="Search term ..." style="padding:5px 10px;border-radius:2px;font-size:14px;width:100%;border:1px solid #bbb">
+                <i style="display:block;font-size:12px;color:#777;margin:1px 2px"><a style="float:right;color:#0a88d3;text-decoration:none" href="https://pixabay.com/blog/posts/id-46/" target="_blank">Learn more</a>Example: "cats OR dogs"</i>
+            </div>
+            <div style="margin:20px 0">
+                <label style="font-size:12px"><input id="safe_search" type="checkbox"> Enable SafeSearch to block inappropriate or explicit images</label>
+            </div>
+            <div style="margin:20px 0">
+                <label>Weather service</label>
+                <select id="weather_service" name="weather_service">
               <option value="wunderground">Weather Underground</option>
               <option value="openweathermap">Open Weather Map</option>
             </select>
+            </div>
+            <input id="confirm_settings" type="button" value="OK" style="width:80px;padding:3px 8px">
+            <input id="cancel_settings" type="button" value="Cancel" style="width:80px;padding:3px 8px">
         </div>
-        <input id="confirm_settings" type="button" value="OK" style="width:80px;padding:3px 8px">
-        <input id="cancel_settings" type="button" value="Cancel" style="width:80px;padding:3px 8px">
-    </div>
 
- 
-    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.loadTemplate.min.js"></script>
-    <script type="text/javascript" src="js/utilities.js"></script>
-    <script type="text/javascript" src="js/background.js"></script>
-    <script type="text/javascript" src="js/clock.js"></script>
-    <script type="text/javascript" src="js/weather.js"></script>
-    <script type="text/javascript" src="js/searchBox.js"></script>
-    <script type="text/javascript" src="js/init.js"></script>
-  </body>
+
+        <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery.loadTemplate.min.js"></script>
+        <script type="text/javascript" src="js/utilities.js"></script>
+
+        <script type="text/javascript" src="js/background.js"></script>
+        <script type="text/javascript" src="js/clock.js"></script>
+        <script type="text/javascript" src="js/weather.js"></script>
+        <script type="text/javascript" src="js/searchBox.js"></script>
+        
+        <script type="text/javascript" src="js/init.js"></script>
+</body>
+
 </html>
