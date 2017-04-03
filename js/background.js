@@ -1,31 +1,34 @@
-function fetchBackground(settings, photoService, width) {
-    pixabayPhoto(settings, width);
-}
+function fetchBackground(forceReload=false) {
+    chrome.storage.sync.get("settings", function (obj) {
+        var getFreshPhoto = true;
+        var d = new Date();
+        var minutes;
+        if(obj.settings['photoLastCall'] !== ""){
+            var storedTime = new Date(obj.settings['photoLastCall']);
+            var diff = Math.abs(d - storedTime);
+            minutes = Math.floor((diff / 1000) / 60);
+        }
 
-function setBackground(url) {
-    document.getElementById('bg_div').style.backgroundImage = 'url(' + url + ')';
+        if (minutes <= 5 && minutes !== null) {
+            getFreshPhoto = false;
+        } else {
+            updateSyncSettings('photoLastCall', d.getTime());
+        }
 
-    // TODO: store new background
-    // fetchPixabayPhoto(window.innerWidth);
-
-    // console.log(localStorage.getItem('currentPhoto'));
-    // console.log(newPhoto);
-
-    // var currentPhoto = localStorage.getItem('currentPhoto');
-    // if(currentPhoto === null){
-    //     // toDataUrl('../images/initial_bg.jpg', function (base64Img) {
-    //     //     currentPhoto = base64Img;
-    //     //     localStorage.setItem('currentPhoto',currentPhoto);
-    //     // });    
-    // }
-    // 
-
+        if(getFreshPhoto || forceReload){
+            var width = window.innerWidth;
+            if (obj.settings['photoservice'] === 'pixabay') {
+                pixabayPhoto(obj.settings, width);
+            }
+        } else{
+            setBackground(obj.settings['currentPhoto']);
+        }
+    });
 }
 
 function pixabayPhoto(settings, width) {
-
-    var ajax = new XMLHttpRequest(),
-        url = 'https://pixabay.com/api?key=2363059-65b4954bde19ecbe197d0f47e&response_group=high_resolution&image_type=photo&orientation=horizontal&per_page=100&';
+    var ajax = new XMLHttpRequest();
+    var url = 'https://pixabay.com/api?key=2363059-65b4954bde19ecbe197d0f47e&response_group=high_resolution&image_type=photo&orientation=horizontal&per_page=100&';
     url += settings.searchTerm ? 'q=' + encodeURIComponent(settings.searchTerm) : 'editors_choice=true';
     if (settings.safeSearch) url += '&safesearch=true';
 
@@ -44,6 +47,10 @@ function pixabayPhoto(settings, width) {
         }
     };
     ajax.send();
+}
+
+function setBackground(url) {
+    document.getElementById('bg_div').style.backgroundImage = 'url(' + url + ')';
 }
 
 // Reddit

@@ -1,9 +1,6 @@
-chrome.runtime.onInstalled.addListener(function(){
-  localStorage.currentPhoto = 'images/initial_bg.jpg';
-  localStorage['settings'] = JSON.stringify({'searchTerm': ''});
-});
+/*global chrome*/
 
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.type) {
         case "openHistory":
           showHistory();

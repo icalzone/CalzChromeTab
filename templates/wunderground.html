@@ -10,8 +10,8 @@
     </div>
     <div class="col-xs-4 col-sm-5 padding0">
         <div class="pull-left">
-            <p class="textleft margin0 weatherLarge" data-content="curtemp"></p>
-            <p class="textleft margin0" data-content="feelslike"></p>
+            <p class="textleft margin0 weatherLarge"><span data-content="current_observation.temp_f"></span> ° F</p>
+            <p class="textleft margin0">Feels like <span data-content="current_observation.feelslike_f"></span> ° F</p>
         </div>
     </div>
 </div>
@@ -43,8 +43,8 @@
                     </div>
                     <div class="col-xs-5 paddingLeft0">
                         <div class="pull-left">
-                            <p class="textleft margin0 weatherLarge" data-content="curtemp"></p>
-                            <p class="textleft margin0" data-content="feelslike"></p>
+                            <p class="textleft margin0 weatherLarge"><span data-content="current_observation.temp_f"></span> ° F</p>
+                            <p class="textleft margin0">Feels like <span data-content="current_observation.feelslike_f"></span> ° F</p>
                         </div>
                     </div>
                 </div>
@@ -66,18 +66,18 @@
 
                     <div class="collapse" id="currentDetails">
                         <div class="col-sm-5 col-sm-offset-2">
-                            <p class="textleft margin0 weatherSmall" data-content="dewpoint"></p>
-                            <p class="textleft margin0 weatherSmall" data-content="humidity"></p>
-                            <p class="textleft margin0 weatherSmall" data-content="preciprate"></p>
-                            <p class="textleft margin0 weatherSmall" data-content="precipaccum"></p>
-                            <p class="textleft margin0 weatherSmall" data-content="pressure"></p>
+                            <p class="textleft margin0 weatherSmall">Dew Point: <span data-content="current_observation.dewpoint_f"></span> ° F</p>
+                            <p class="textleft margin0 weatherSmall">Humidity: <span data-content="current_observation.relative_humidity"></span></p>
+                            <p class="textleft margin0 weatherSmall">Precip rate: <span data-content="current_observation.precip_1hr_in"></span> in/hr</p>
+                            <p class="textleft margin0 weatherSmall">Precip accum: <span data-content="current_observation.precip_today_in"></span> in</p>
+                            <p class="textleft margin0 weatherSmall">Pressure: <span data-content="current_observation.pressure_in"></span> in</p>
                         </div>
                         <div class="col-sm-5">
-                            <p class="textleft margin0 weatherSmall" data-content="windchill"></p>
-                            <p class="textleft margin0 weatherSmall" data-content="visibility"></p>
-                            <p class="textleft margin0 weatherSmall" data-content="uv"></p>
-                            <p class="textleft margin0 weatherSmall" data-content="solarradiation"></p>
-                            <p class="textleft margin0 weatherSmall" data-content="heatindex"></p>
+                            <p class="textleft margin0 weatherSmall">Windchill: <span data-content="current_observation.windchill_f"></span> ° F</p>
+                            <p class="textleft margin0 weatherSmall">Visibility: <span data-content="current_observation.visibility_mi"></span> miles</p>
+                            <p class="textleft margin0 weatherSmall">UV: <span data-content="current_observation.UV"></span></p>
+                            <p class="textleft margin0 weatherSmall">Solar: <span data-content="current_observation.solarradiation" data-format="Solar"></span></p>
+                            <p class="textleft margin0 weatherSmall">Heat index: <span data-content="current_observation.heat_index_f" data-format="HeatIndex"></span></p>
                         </div>
                     </div>
                 </div>

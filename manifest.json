@@ -18,11 +18,11 @@
   "chrome_url_overrides": {
     "newtab": "main.html"
   },
-  "permissions": ["storage", "bookmarks", "history"],
+  "permissions": ["storage", "bookmarks", "history", "tabs"],
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "js": ["js/jquery-3.1.1.min.js", "js/init.js"]
   }]
 }
-// "content_security_policy": "script-src 'self' 'unsafe-inline'; object-src 'self'",
 // "permissions": ["storage", "<all_urls>", "topSites", "management", "unlimitedStorage", "bookmarks", "tabs", "sessions", "history", "activeTab"],
+// "content_security_policy" : "script-src 'self' 'unsafe-inline'; object-src 'self'"

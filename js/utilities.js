@@ -1,68 +1,30 @@
-function updateSyncSettings(key, value){
+/*eslint no-unused-vars: 0*/
+/*global chrome*/
+
+function updateSyncSettings(key, value) {
     chrome.storage.sync.get("settings", function (obj) {
         var syncSettings = obj.settings;
         syncSettings[key] = value;
-        chrome.storage.sync.set({ 'settings': syncSettings }, function () { });
+        chrome.storage.sync.set({
+            'settings': syncSettings
+        }, function () {});
     });
 }
-function updateLocalSettings(key, value){
-    chrome.storage.local.get("settings", function (obj) {
-        console.dir("Retreived settings: " + obj);
 
+function updateLocalSettings(key, value) {
+    chrome.storage.local.get("settings", function (obj) {
         var localSettings;
-        if(obj.settings === undefined){
+        if (obj.settings === undefined) {
             localSettings = {};
         } else {
             localSettings = obj.settings;
         }
 
         localSettings[key] = value;
-        chrome.storage.local.set({ 'settings': localSettings }, function () { });
-
-        // console.log("Local settings: "+localSettings);
+        chrome.storage.local.set({
+            'settings': localSettings
+        }, function () {});
     });
-}
-
-
-
-// chrome.storage.sync.get("settings", function (obj) {
-//     if (obj.settings === undefined) {
-//         var defaultSettings = {
-//             "weatherservice": "wunderground",
-//             "searchTerm": "landscape",
-//             "safeSearch": "true",
-//             "currentPhoto": "../images/initial_bg.jpg"
-//         };
-//         chrome.storage.sync.set({
-//             'settings': defaultSettings
-//         }, function () {
-//             initialize(defaultSettings);
-//         });
-//     } else {
-//         initialize(obj.settings);
-//     }
-// });
-
-
-
-function toDataUrl(src, callback, outputFormat) {
-    var img = new Image();
-    img.crossOrigin = 'Anonymous';
-    img.onload = function () {
-        var canvas = document.createElement('CANVAS');
-        var ctx = canvas.getContext('2d');
-        var dataURL;
-        canvas.height = this.height;
-        canvas.width = this.width;
-        ctx.drawImage(this, 0, 0);
-        dataURL = canvas.toDataURL(outputFormat);
-        callback(dataURL);
-    };
-    img.src = src;
-    if (img.complete || img.complete === undefined) {
-        img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-        img.src = src;
-    }
 }
 
 var capitalize = function (str) {
@@ -75,7 +37,7 @@ var capitalize = function (str) {
     }
     return str;
     // return str[0].toUpperCase()+str.slice(1);
-}
+};
 var splitWordsAndCap = function (str) {
     str = str || '';
     var words = str.match(/\S+/g);
@@ -83,26 +45,25 @@ var splitWordsAndCap = function (str) {
         words[i] = capitalize(words[i]);
     }
     return words.join(' ');
-}
-
+};
 // Cookie handlers
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
-};
+}
 
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-    };
+        while (c.charAt(0) === ' ') c = c.substring(1);
+        if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+    }
     return "";
-};
+}
 
 // Style methods
 var innerHTML = function (id, string) {
@@ -121,7 +82,7 @@ var styleGrayscale = function (delay, id, value) {
             document.getElementById(id).style.webkitFilter = "grayscale(1)";
         } else {
             document.getElementById(id).style.webkitFilter = "grayscale(0)";
-        };
+        }
     }, delay);
 };
 // Visibility style
@@ -159,7 +120,7 @@ $.addTemplateFormatter({
         return value.toLowerCase();
     },
     SameCaseFormatter: function (value, template) {
-        if (template == "upper") {
+        if (template === "upper") {
             return value.toUpperCase();
         } else {
             return value.toLowerCase();

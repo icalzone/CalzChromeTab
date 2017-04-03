@@ -1,16 +1,19 @@
+/*eslint no-unused-vars: 0*/
+/*global chrome fetchBackground*/
+
 // chrome.storage.sync.clear();
+// chrome.storage.local.clear();
 
 chrome.storage.sync.get("settings", function (obj) {
-    var d = new Date();
-    var time = d.getTime();
-
     if (obj.settings === undefined) {
         var defaultSettings = {
-            "weatherservice": "openweathermap",
+            "weatherservice": "wunderground",
+            "weatherLastCall": "",
             "searchTerm": "landscape",
             "safeSearch": "true",
+            "photoservice": "pixabay",
             "currentPhoto": "../images/initial_bg.jpg",
-            "weatherLastCall": time
+            "photoLastCall":""
         };
         chrome.storage.sync.set({
             'settings': defaultSettings
@@ -23,11 +26,29 @@ chrome.storage.sync.get("settings", function (obj) {
 });
 
 function initialize(settings) {
-    console.dir(settings);
+    // console.dir(settings);
+
+    fetchBackground();
+    fetchWeather();
 
     $("#srchImgBx i").hide();
 
-    fetchBackground(settings, 'pixabay', window.innerWidth);
+    if (getCookie("opSrchBx") === "") {
+        setCookie("opSrchBx", "google", 365);
+    }
+    makeSearchBox(getCookie("opSrchBx"));
+
+    styleOpacity(500, "clockBox", 0.8);
+    styleOpacity(500, "dateBox", 0.8);
+    styleOpacity(500, "bottomLinksCntnr", 0.6);
+
+    $("#topActionBar a").click(function (e) {
+        e.preventDefault();
+        var cmd = $(this).attr("href");
+        chrome.runtime.sendMessage({
+            type: cmd
+        });
+    });
 
     var settings_dialog = document.getElementById('settings_dialog');
     var confirm_settings = document.getElementById('confirm_settings');
@@ -53,35 +74,19 @@ function initialize(settings) {
         blur_overlay.style.display = 'none';
         settings_dialog.style.display = 'none';
     };
-
-    if (getCookie("opSrchBx") === "") {
-        setCookie("opSrchBx", "google", 365);
-    }
-    makeSearchBox(getCookie("opSrchBx"));
-
-    styleOpacity(500, "clockBox", 0.8);
-    styleOpacity(500, "dateBox", 0.8);
-    styleOpacity(500, "bottomLinksCntnr", 0.6);
-
-    fetchWeather(settings);
+    search_term.onkeypress = function (e) {
+        if (e.keyCode == 13) confirm_settings.click();
+    };
+    confirm_settings.onclick = function () {
+        dim_overlay.style.display = 'none';
+        blur_overlay.style.display = 'none';
+        settings_dialog.style.display = 'none';
+        // localStorage['settings'] = JSON.stringify({
+        //     'searchTerm': search_term.value,
+        //     'safeSearch': safe_search.checked,
+        //     'weatherservice': $("#weather_service").val()
+        // });
+        fetchWeather(true);
+        fetchBackground(true);
+    };
 }
-
-//     search_term.onkeypress = function(e) {
-//         if (e.keyCode == 13) confirm_settings.click(); };
-
-//     confirm_settings.onclick = function() {
-//         dim_overlay.style.display = 'none';
-//         blur_overlay.style.display = 'none';
-//         settings_dialog.style.display = 'none';
-//         localStorage['settings'] = JSON.stringify({ 'searchTerm': search_term.value, 'safeSearch': safe_search.checked, 'weatherservice': $("#weather_service").val() });
-//         fetchPixabayPhoto(window.innerWidth, true);
-//     };
-//     // Run when page finished loading
-//     document.addEventListener('DOMContentLoaded', function() {
-//       $("#topActionBar a").click(function(e){
-//         e.preventDefault();
-//         var cmd = $(this).attr("href");
-//         chrome.extension.sendMessage({type: cmd});
-//       });
-//     });
-// }
