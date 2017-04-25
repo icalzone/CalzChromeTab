@@ -20,7 +20,7 @@
 <body>
     <div class="container-fluid" id="bg_div" class="fade_in">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="searchCntnr" id="searchCntnr">
                     <div id="srchImgBx">
                         <i class="fa fa-google fa-2x" aria-hidden="true" id="google" class="srchBxImg"></i>
@@ -32,7 +32,12 @@
                     <div id="srchBx"></div>
                 </div>
             </div>
-            <div class="col-sm-6 nopadding">
+
+            <div class="col-sm-4">
+                <p id="quote" class="textcenter"></p>
+            </div>
+
+            <div class="col-sm-4 nopadding">
                 <div id="topActionBar">
                     <ul class="list-inline" id="topIconRow">
                         <li><a href="openBookmarks">Bookmarks</a></li>
@@ -51,8 +56,8 @@
         <div class="row bottom marginBottom85">
             <div class="col-sm-10 col-sm-offset-1">
                 <div class="datetimeCntnr marginBottom5">
-                    <div class="mainClock" id="clockBox"></div>
-                    <div class="mainDate" id="dateBox"></div>
+                    <div class="mainClock" id="time"></div>
+                    <div class="mainDate" id="date"></div>
                 </div>
             </div>
         </div>
@@ -64,45 +69,32 @@
         </div>
 
         <div class="bottomright marginBottom10">
-                <div class="bottomLinksCntnr" id="bottomLinksCntnr">
-                    <a href="#" id="settings_link" title="Settings" class="hover_opacity settings"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i></a>
-                </div>
+            <div class="bottomLinksCntnr" id="bottomLinksCntnr">
+                <a href="#" id="go-to-options" title="Options" class="hover_opacity settings"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i></a>
+            </div>
         </div>
 
         <div id="blur_overlay"></div>
         <div id="dim_overlay"></div>
 
-        <div id="settings_dialog">
-            Please enter a search term or leave this field blank to choose from all images on Pixabay.
-            <div style="margin:20px 0">
-                <input id="search_term" name="search_term" type="text" maxlength="80" placeholder="Search term ..." style="padding:5px 10px;border-radius:2px;font-size:14px;width:100%;border:1px solid #bbb">
-                <i style="display:block;font-size:12px;color:#777;margin:1px 2px"><a style="float:right;color:#0a88d3;text-decoration:none" href="https://pixabay.com/blog/posts/id-46/" target="_blank">Learn more</a>Example: "cats OR dogs"</i>
-            </div>
-            <div style="margin:20px 0">
-                <label style="font-size:12px"><input id="safe_search" type="checkbox"> Enable SafeSearch to block inappropriate or explicit images</label>
-            </div>
-            <div style="margin:20px 0">
-                <label>Weather service</label>
-                <select id="weather_service" name="weather_service">
-              <option value="wunderground">Weather Underground</option>
-              <option value="openweathermap">Open Weather Map</option>
-            </select>
-            </div>
-            <input id="confirm_settings" type="button" value="OK" style="width:80px;padding:3px 8px">
-            <input id="cancel_settings" type="button" value="Cancel" style="width:80px;padding:3px 8px">
-        </div>
+        <div id="settings_dialog"></div>
 
-
-        <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/jquery.loadTemplate.min.js"></script>
-        <script type="text/javascript" src="js/utilities.js"></script>
-
-        <script type="text/javascript" src="js/background.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.loadTemplate.min.js"></script>
+        <script type="text/javascript" src="js/lib/mousetrap.1.6.1.min.js"></script>
+        <script type="text/javascript" src="js/lib/unsplash-source.1.0.0.min.js"></script>
+        <script type="text/javascript" src="js/reddit.js"></script>
+        
         <script type="text/javascript" src="js/clock.js"></script>
+        <script type="text/javascript" src="js/quote.js"></script>
+        <script type="text/javascript" src="js/background.js"></script>
+
+
+        <script type="text/javascript" src="js/utilities.js"></script>
         <script type="text/javascript" src="js/weather.js"></script>
         <script type="text/javascript" src="js/searchBox.js"></script>
-        
+
         <script type="text/javascript" src="js/init.js"></script>
 </body>
 

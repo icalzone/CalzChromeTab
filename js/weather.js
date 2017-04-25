@@ -1,12 +1,12 @@
 /*eslint no-unused-vars: 0*/
 /*global chrome updateLocalSettings updateSyncSettings*/
 
-function fetchWeather(forceReload=false) {
+function fetchWeather(settings, forceReload = false) {
     chrome.storage.sync.get("settings", function (obj) {
         var getFreshWeather = true;
         var d = new Date();
         var minutes;
-        if(obj.settings['weatherLastCall'] !== ""){
+        if (obj.settings['weatherLastCall'] !== "") {
             var storedTime = new Date(obj.settings['weatherLastCall']);
             var diff = Math.abs(d - storedTime);
             minutes = Math.floor((diff / 1000) / 60);
@@ -18,10 +18,10 @@ function fetchWeather(forceReload=false) {
             updateSyncSettings('weatherLastCall', d.getTime());
         }
 
-        if (obj.settings['weatherservice'] === 'wunderground') {
-            wunderground.buildWeather(getFreshWeather,forceReload);
-        } else if (obj.settings['weatherservice'] === 'openweathermap') {
-            fetchOpenWeatherMapWeather(getFreshWeather,forceReload);
+        if (obj.settings['weatherService'] === 'wunderground') {
+            wunderground.buildWeather(getFreshWeather, forceReload);
+        } else if (obj.settings['weatherService'] === 'openweathermap') {
+            fetchOpenWeatherMapWeather(getFreshWeather, forceReload);
         }
     });
 }
@@ -72,7 +72,7 @@ var wunderground = {
             return data;
         });
     },
-    buildWeather: function (getFreshWeather,forceReload) {
+    buildWeather: function (getFreshWeather, forceReload) {
         if (getFreshWeather || forceReload) {
             wunderground.getConditions();
             wunderground.getForecast();
@@ -80,8 +80,8 @@ var wunderground = {
             //wunderground.getAlmanac();
             $(document).ajaxStop(function () {
                 wunderground.loadWeather();
-            });    
-    } else {
+            });
+        } else {
             chrome.storage.local.get("settings", function (obj) {
                 wunderground.conditions = obj.settings.conditions;
                 wunderground.forecast = obj.settings.forecast;
@@ -132,7 +132,7 @@ var wunderground = {
     }
 };
 
-function fetchOpenWeatherMapWeather(getFreshWeather,forceReload) {
+function fetchOpenWeatherMapWeather(getFreshWeather, forceReload) {
     var query = "03766";
     var apikey = "fc7d9e6c78ebd960c34d345938ea3da1";
 

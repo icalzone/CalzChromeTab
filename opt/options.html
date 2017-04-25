@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>New Tab Options</title>
+</head>
+
+<body>
+    <div style="margin:20px 0">
+        <label>Weather service</label>
+        <select id="weatherservice" name="weatherservice">
+        <option value="wunderground">Weather Underground</option>
+        <option value="openweathermap">Open Weather Map</option>
+        <option value="darksky">Dark Sky</option>
+        <option value="forecastio">Forecast io</option>
+        </select>
+    </div>
+
+    <p>
+        <label for="refresh">Background refresh rate:</label>
+        <select id="refresh" name="refresh">
+			<option value="minutes">Every 5 minutes</option>
+			<option value="hourly">Once an hour</option>
+			<option value="daily">Once a day</option>
+		</select>
+    </p>
+
+    <p style="margin:20px 0">
+        <label>Photo service</label>
+        <select id="photoservice" name="photoservice">
+        <option value="pixabay">Pixabay</option>
+        <option value="unsplash">Unsplash</option>
+        <option value="googleearth">Google Earth</option>
+        <option value="reddit">Reddit</option>
+        </select>
+    </p>
+
+    <div style="margin:20px 0">
+        <h4>Pixabay settings</h4>
+        <label for="pixabay_search_term">Search term</label><br>
+        <input id="pixabay_search_term" name="pixabay_search_term" type="text" maxlength="80" placeholder="Search term ..." style="padding:5px 10px;border-radius:2px;font-size:14px;width:15%;border:1px solid #bbb"><br>
+        <i style="font-size:12px;color:#777;margin:1px 2px"><a style="color:#0a88d3;text-decoration:none;padding-right: 10px;" href="https://pixabay.com/blog/posts/id-46/" target="_blank">Learn more</a>Example: "cats OR dogs"</i>
+    </div>
+    <div style="margin:20px 0">
+        <label style="font-size:12px"><input id="pixabay_safe_search" type="checkbox"> Enable SafeSearch to block inappropriate or explicit images</label>
+    </div>
+
+    <div style="margin:20px 0">
+        <h4>Unsplash settings</h4>
+        <p>Background category:<br />
+            <label><input type="checkbox" id="categoryBuildings" value="category/Buildings" /> Buildings<br /></label>
+            <label><input type="checkbox" id="categoryNature" value="category/Nature" /> Nature<br /></label>
+            <label><input type="checkbox" id="categoryPeople" value="category/People" /> People<br /></label>
+            <label><input type="checkbox" id="categoryTechnology" value="category/Technology" /> Technology<br /></label>
+            <label><input type="checkbox" id="categoryObjects" value="category/Objects" /> Objects<br /></label>
+        </p>
+    </div>
+
+    <div style="margin:20px 0">
+        <h4>Reddit settings</h4>
+        <div>
+            <label>Which subreddit or multireddit?</label>
+            <br>
+            <span>www.reddit.com</span>
+            <input type="text" name="subreddit" placeholder="/r/EarthPorn"><br>
+            <span class="note">
+                For multireddits, input the entire url after "reddit.com",<br>
+                e.g. <i class="nowrap">"/user/kjoneslol/m/sfwpornnetwork"</i>.
+                </span>
+            <span class="note">Only public multireddits are supported.</span>
+        </div>
+
+        <p>Sort type:</p>
+        <select name="redditsort">
+          <option value="top">Top</option>
+          <option value="hot">Hot</option>
+          <option value="new">New</option>
+          <option value="rising">Rising</option>
+          <option value="controversial">Controversial</option>
+        </select><br>
+
+        <p>From how long ago:</p>
+        <select name="redditperiod">
+          <option value="hour">Past Hour</option>
+          <option value="day">Past Day</option>
+          <option value="week">Past Week</option>
+          <option value="month">Past Month</option>
+          <option value="year">Past Year</option>
+          <option value="all">All Time</option>
+        </select><br>
+
+        <p><label for="nsfw">Allow NSFW images:</label>
+        &nbsp;<input type="checkbox" name="nsfw"></p>
+
+    </div>
+
+    <p><button id="save">Save</button></p>
+    <p id="status"></p>
+    <script src="options.js"></script>
+
+</body>
+
+</html>

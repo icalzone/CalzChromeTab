@@ -156,8 +156,6 @@ body {
     text-align: center;
     font-size: 48px;
     cursor: default;
-    opacity: 0;
-    transition: opacity 1s;
     background-color: transparent;
     line-height: 52px;
     font-family: 'Roboto', sans-serif;
@@ -169,8 +167,6 @@ body {
     text-align: center;
     font-size: 24px;
     cursor: default;
-    opacity: 0;
-    transition: opacity 1s;
     background-color: transparent;
     line-height: 26px;
     font-family: 'Roboto', sans-serif;
@@ -236,7 +232,7 @@ i.wi {
 
 .weatherDetailModal i.wi {
     font-size: 48px;
-    color: darkorange;
+    color: darkslategray;
     padding: 15px 0;
 }
 

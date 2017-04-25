@@ -1,72 +1,27 @@
-var main = true;
-
-// Set date, time, date alerts & welcome messages
-var nday;
-var nmonth;
-var ndate;
-var strdndth;
-var hourtf;
-var tday = new Array ("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-var tmonth = new Array ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-setInterval(clock, 100);
-function clock() {
-  var d = new Date();
-  nday = d.getDay()
-  nmonth = d.getMonth()
-  ndate = d.getDate();
-  var nhour = d.getHours(), nmin = d.getMinutes(), ap;
-  var thour = d.getHours();
-  if (nhour === 0) {
-    ap = " AM";
-    nhour = 12;
-  } else if (nhour < 12) {
-    ap = " AM";
-  } else if (nhour === 12) {
-    ap = " PM";
-  } else if (nhour > 12) {
-    ap = " PM";
-    nhour -= 12;
-  };
-  if (nmin <= 9) {
-    nmin = "0" + nmin;
-  };
-  if (ndate === 1 || ndate === 21 || ndate === 31) {
-    strdndth = "st";
-  } else if (ndate === 2 || ndate === 22) {
-    strdndth = "nd";
-  } else if (ndate === 3 || ndate === 23) {
-    strdndth = "rd";
-  } else {
-    strdndth = "th";
-  };
-
-  if (main) {
-    if (getCookie("opTwntyFrHrTm") === "24") {
-      hourtf = nhour + 12;
-      innerHTML("clockBox", hourtf + ":" + nmin);
-    } else {
-      if (getCookie("opAMPM") === "show") {
-        innerHTML("clockBox", nhour + ":" + nmin + ap);
-      } else {
-        innerHTML("clockBox", nhour + ":" + nmin);
-      };
-    };
-  } else {
-    if (getCookie("opTwntyFrHrTm") === "24") {
-      hourtf = nhour + 12;
-      innerHTML("clockBox", hourtf + ":" + nmin);
-    } else {
-      innerHTML("clockBox", nhour + ":" + nmin);
-    };
-  };
-
-  //if (getCookie("opDteFom") === "1") {
-    innerHTML("dateBox", tday[nday] + ", " + tmonth[nmonth] + " " + ndate + "<sup>" + strdndth + "</sup>");
-  //} else if (getCookie("opDteFom") === "2") {
-    //innerHTML("dateBox", tmonth[nmonth] + " " + ndate + "<sup>" + strdndth + "</sup>");
-  //} else if (getCookie("opDteFom") === "3") {
-    //innerHTML("dateBox", tday[nday] + ", " + ndate + " " + tmonth[nmonth]);
-  //} else if (getCookie("opDteFom") === "4") {
-    //innerHTML("dateBox", tmonth[nmonth] + " " + ndate + "<sup>" + strdndth + "</sup>");
-  //};
-};
+// Finds current time and date, formats it properly
+function startTime() {
+  var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  var strdndth = "th";
+  var now = new Date();
+  var time = [now.getHours(), now.getMinutes(), now.getSeconds()];
+  var date = [now.getDate(), now.getDay(), now.getMonth(), now.getFullYear()];
+  var hour = time[0];
+  var mins = time[1];
+  var secs = time[2];
+  var ampm = hour >= 12 ? 'PM' : 'AM';
+  var day = date[0];
+  var weekday = dayNames[date[1]];
+  var month = monthNames[date[2]];
+  var year = date[3];
+  strdndth = (day === 1 || day === 21 || day === 31) ? "st" : strdndth;
+  strdndth = (day === 2 || day === 22) ? "nd" : strdndth;
+  strdndth = (day === 3 || day === 23) ? "rd" : strdndth;
+  hour = hour % 12;
+  hour = hour ? hour : 12;
+  mins = mins < 10 ? '0' + mins : mins;
+  secs = secs < 10 ? '0' + secs : secs;
+  document.getElementById('time').innerHTML = hour + ':' + mins + ':' + secs + ' ' + ampm;
+  document.getElementById('date').innerHTML = weekday + ', ' + month + ' ' + day + ', ' + year;
+  var t = setTimeout(startTime, 500);
+}
